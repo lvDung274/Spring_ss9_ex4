@@ -8,10 +8,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/departments")
@@ -19,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepartmentController {
     private final DepartmentService departmentService;
 
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(departmentService.findAll());
+    }
     @PostMapping
     public ResponseEntity<ApiResponse<Department>> createDepartment(@Valid @RequestBody DepartmentDTO req) {
         Department createdDepartment = departmentService.createDepartment(req);
